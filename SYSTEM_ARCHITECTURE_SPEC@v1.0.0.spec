@@ -489,15 +489,13 @@ class EpistemicVerificationPipeline:
 
 ### 4.2. Algorithmic Complexity Guarantees & Safeguards
 
-$$\begin{array}{|l|l|l|l|}
-\hline
-\textbf{Subsystem} & \textbf{Algorithm / Theoretical Bound} & \textbf{Deterministic Guardrail} & \textbf{Mitigation Strategy} \\ \hline
-\text{ASP Synthesis} & \text{NP-Complete (Stable Model Semantics)} & 1,500\text{ ms hard cgroups limit} & \text{Pre-generation buffer; discard on timeout} \\ \hline
-\text{SMT Verification} & \text{Undecidable (General) / PSPACE (QBF)} & \text{Restricted to Propositional + LRA} & \text{Strictly bounded quantifier-free logic} \\ \hline
-\text{Client Wasm} & \text{Linear Resolution / 2-SAT / DPLL} & 16\text{ MB linear memory ceiling} & \text{Incremental Push/Pop; arena reset} \\ \hline
-\text{SSNE Skinning} & \text{Deterministic CFG Parsing } \mathcal{O}(n^3) & 50\text{ ms per graph parsing budget} & \text{Strict CNL grammars; fallback skin} \\ \hline
-\text{Telemetry} & \text{Append-Only Ingestion } \mathcal{O}(1) & 5,000\text{-event micro-batches} & \text{NATS backpressure; TimescaleDB COPY} \\ \hline
-\end{array}$$
+| **Subsystem** | **Algorithm / Theoretical Bound** | **Deterministic Guardrail** | **Mitigation Strategy** |
+|---|---|---|---|
+| **ASP Synthesis** | NP-complete under stable-model semantics | 1,500 ms hard cgroup limit | Pre-generation buffer; discard on timeout |
+| **SMT Verification** | Undecidable in general; PSPACE for QBF | Restricted to propositional logic and LRA | Strictly bounded quantifier-free logic |
+| **Client WASM** | Linear resolution, 2-SAT, and DPLL | 16 MB linear-memory ceiling | Incremental push/pop; arena reset |
+| **SSNE Skinning** | Deterministic CFG parsing, \(\mathcal{O}(n^3)\) | 50 ms per-graph parsing budget | Strict CNL grammars; fallback skin |
+| **Telemetry** | Append-only ingestion, \(\mathcal{O}(1)\) | 5,000-event micro-batches | NATS backpressure; TimescaleDB `COPY` |
 
 ---
 
